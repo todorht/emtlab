@@ -1,7 +1,7 @@
 import './App.css';
 import React, {Component} from "react";
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
-import Books from '../Books/BookTerm/bookTerm';
+import Books from '../Books/BookList/books';
 import Header from '../Header/header'
 import Categories from '../Categories/categories'
 import LibraryService from "../../repository/libraryRepository";
@@ -45,18 +45,18 @@ class App extends Component{
         })
   }
 
-  // loadCategories = () =>{
-  //     LibraryService.fetchCategories()
-  //         .then((data) =>{
-  //             this.state({
-  //                 categories: data.data
-  //             })
-  //         })
-  // }
+  loadCategories = () =>{
+      LibraryService.fetchCategories()
+          .then((data) =>{
+              this.setState({
+                  categories: data.data
+              })
+          })
+  }
 
   componentDidMount() {
     this.loadBooks();
-     // this.loadCategories();
+    this.loadCategories();
   }
 }
 

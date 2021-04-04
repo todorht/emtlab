@@ -4,9 +4,9 @@ const bookTerm = (props) => {
 
     return(
             <tr>
-                <td>{props.name}</td>
-                <td>{props.author.name + " " + props.author.surname}</td>
-                <td>{props.category}</td>
+                <td>{props.book.name}</td>
+                <td>{props.book.author.name + " " + props.book.author.surname}</td>
+                <td>{props.book.category}</td>
             </tr>
     )
 
