@@ -59,5 +59,4 @@ public class BookRestController {
         return ResponseEntity.badRequest().build();
     }
 
-
 }

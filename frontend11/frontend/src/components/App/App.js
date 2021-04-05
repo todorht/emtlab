@@ -22,9 +22,8 @@ class App extends Component{
             <Header/>
             <main>
                 <div>
-                    <h1>Online Library</h1>
                      <Route path={"/books"} exact render={
-                         () => <Books books={this.state.books}/>
+                         () => <Books books={this.state.books} onDelete={this.deleteBook}/>
                      }/>
                     <Route path={"/categories"} exact render={
                         () => <Categories categories={this.state.categories}/>
@@ -51,6 +50,13 @@ class App extends Component{
               this.setState({
                   categories: data.data
               })
+          })
+  }
+
+  deleteBook = (id) => {
+      LibraryService.deleteBook(id)
+          .then(()=>{
+              this.loadBooks();
           })
   }
 

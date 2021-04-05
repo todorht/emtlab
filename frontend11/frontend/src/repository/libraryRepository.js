@@ -6,6 +6,9 @@ const LibraryService = {
     },
     fetchCategories: () =>{
         return axios.get("/categories");
+    },
+    deleteBook: (id)=>{
+        return axios.delete(`/books/delete/${id}`);
     }
 }
 

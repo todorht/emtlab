@@ -45,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<Book> findById(Long id) {
-        return this.findById(id);
+        return this.bookRepository.findById(id);
     }
 
     @Override
