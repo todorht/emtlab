@@ -15,8 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -35,7 +37,9 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<Book> findAll() {
-        return this.bookRepository.findAll();
+        return this.bookRepository.findAll().stream()
+                .sorted(Comparator.comparing(Book::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -101,6 +105,15 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(()-> new AuthorNotFoundException(bookDto.getAuthor()));
         book.setAuthor(author);
         book.setAvailableCopies(bookDto.getAvailableCopies());
+        this.bookRepository.save(book);
+        return Optional.of(book);
+    }
+
+    @Override
+    public Optional<Book> markAsTaken(Long id) {
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow(()-> new BookNotFoundException(id));
+        book.setAvailableCopies(book.getAvailableCopies()-1);
         this.bookRepository.save(book);
         return Optional.of(book);
     }

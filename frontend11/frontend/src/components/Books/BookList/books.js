@@ -31,12 +31,20 @@ class Books extends React.Component {
                                 <th scope={"col"}>Title</th>
                                 <th scope={"col"}>Author</th>
                                 <th scope={"col"}>Category</th>
+                                <th scope={"col"}></th>
                             </tr>
                             </thead>
                             <tbody>
                             {books}
                             </tbody>
                         </table>
+                    </div>
+                    <div className="col mb-3">
+                        <div className="row">
+                            <div className="col-sm-12 col-md-12">
+                                <Link className={"btn btn-block btn-dark"} to={"/books/add"}>Add new product</Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <ReactPaginate previousLabel={"back"}
@@ -49,7 +57,8 @@ class Books extends React.Component {
                                pageRangeDisplayed={5}
                                onPageChange={this.handlePageClick}
                                containerClassName={"pagination m-4 justify-content-center"}
-                               activeClassName={"active"}/>
+                               activeClassName={"active"}
+                                className={""}/>
             </div>
         )
     }
@@ -63,8 +72,9 @@ class Books extends React.Component {
 
     getBooksPage = (offset, nextPageOffset) => {
         return this.props.books.map((term) => {
+            const show = term.availableCopies;
             return (
-                <BookTerm book={term} onDelete={this.props.onDelete}/>
+                <BookTerm book={term} numBooks={show} onDelete={this.props.onDelete} takeBook={this.props.onTakeBook}/>
             );
         }).filter((books, index) => {
             return index>=offset && index < nextPageOffset;

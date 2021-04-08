@@ -27,6 +27,8 @@ public interface BookService {
 
     Optional<Book> edit(Long id, BookDto bookDto);
 
+    Optional<Book> markAsTaken(Long id);
+
     void deleteById(Long id);
 
 }

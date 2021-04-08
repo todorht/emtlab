@@ -26,11 +26,6 @@ public class BookRestController {
         return this.bookService.findAll();
     }
 
-//    @GetMapping
-//    private List<Book> findAllP(Pageable pageable) {
-//        return this.bookService.findAllWithPagination(pageable).getContent();
-//    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Book> findById(@PathVariable Long id) {
         return this.bookService.findById(id)
@@ -41,14 +36,14 @@ public class BookRestController {
     @PostMapping("/add")
     public ResponseEntity<Book> save(@RequestBody BookDto bookDto) {
         return this.bookService.save(bookDto)
-                .map(product -> ResponseEntity.ok().body(product))
+                .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Book> save(@PathVariable Long id, @RequestBody BookDto bookDto) {
         return this.bookService.edit(id, bookDto)
-                .map(product -> ResponseEntity.ok().body(product))
+                .map(book -> ResponseEntity.ok().body(book))
                 .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
@@ -57,6 +52,14 @@ public class BookRestController {
         this.bookService.deleteById(id);
         if(this.bookService.findById(id).isEmpty()) return ResponseEntity.ok().build();
         return ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/{id}/take")
+    public ResponseEntity<Book> markAsTaken(@PathVariable Long id){
+        return this.bookService.markAsTaken(id)
+                .map(book -> ResponseEntity.ok().body(book))
+                .orElseGet(()-> ResponseEntity.badRequest().build());
+
     }
 
 }
